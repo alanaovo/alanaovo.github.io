@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experience — Alana Pang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
+<style>
+  /*
+    This page intentionally uses a lighter touch than the Home page.
+    Home = "playful shell" (memo board, polaroids, tape, pins).
+    Experience = "professional skeleton" — same fonts/colors for
+    continuity, but laid out clean and easy to scan since this is the
+    page recruiters actually need to get through quickly.
+  */
+  :root{
+    --bg: #F5F0E8;
+    --ink: #3B2A1E;
+    --ink-soft: #5c4a3a;
+    --card: #FFFDF8;
+    --line: #E4DAC4;
+    --tape-yellow: #F0C93A;
+    --tape-cyan: #7FE3E3;
+    --tape-pink: #F28FC0;
+    --tape-purple: #C9A8E8;
+    --shadow: rgba(59, 42, 30, 0.16);
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    font-family: 'futura-pt', 'Century Gothic', 'Trebuchet MS', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: var(--ink);
+    padding: 48px 24px 80px;
+  }
+
+  .page{
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .top-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 46px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .back-link{
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+  }
+  .back-link:hover{ border-bottom-color: var(--ink-soft); }
+
+  .download-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--card);
+    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 11px 20px;
+    border-radius: 30px;
+    box-shadow: 0 6px 14px -6px var(--shadow);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .download-btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px -6px var(--shadow);
+  }
+
+  h1.page-title{
+    font-family: 'Chelsea Market', cursive;
+    font-size: 42px;
+    margin: 0 0 6px;
+  }
+  .page-subtitle{
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0 0 56px;
+  }
+
+  h2.section-title{
+    font-family: 'Chelsea Market', cursive;
+    font-size: 24px;
+    margin: 0 0 26px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2.section-title::before{
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--tape-pink);
+    display: inline-block;
+  }
+
+  section{ margin-bottom: 64px; }
+
+  /* ---- logo "stickers" — reusable for both education and work entries.
+     Real logos aren't wired in yet (waiting on files), so each one is a
+     placeholder chip for now. Sizes are intentionally NOT uniform — swap
+     the inner content for an <img src="..."> per instance and adjust
+     width/rotation freely; nothing else needs to change. */
+  .sticker{
+    position: absolute;
+    background: #fff;
+    padding: 6px;
+    border-radius: 8px;
+    box-shadow: 0 6px 14px -4px rgba(20,12,4,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  .sticker img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .sticker-label{
+    font-family: 'Chelsea Market', cursive;
+    color: var(--ink-soft);
+    line-height: 1;
+    text-align: center;
+  }
+  /* "cutout" stickers — for logos that are already die-cut / transparent
+     (like a mascot or crest with no background), skip the white square
+     backing and just float the shape itself with a drop shadow, so it
+     reads as a real sticker peeling off the page rather than a badge.
+     Use the plain .sticker (white square) for flat rectangular logos that
+     still have their own background color. When you send more images to
+     crop into custom shapes, this is the class to use for them. */
+  .sticker.cutout{
+    background: none;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .sticker.cutout img{
+    filter: drop-shadow(0 5px 9px rgba(20,12,4,0.4));
+  }
+
+  /* ---- education ---- */
+  .edu-card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    margin-top: 58px; /* reserves headroom for stickers hanging above the
+      card — margin-top/margin-bottom collapse between cards, so this
+      doesn't stack into huge gaps */
+    position: relative;
+  }
+  .edu-card:last-child{ margin-bottom: 0; }
+  .edu-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+  .edu-school{
+    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-weight: 600;
+    font-size: 16.5px;
+  }
+  .edu-dates{
+    font-size: 13px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .edu-detail{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+  .edu-detail .cert{
+    display: inline-block;
+    background: #F1E9D6;
+    color: var(--ink);
+    font-size: 12px;
+    padding: 2px 9px;
+    border-radius: 20px;
+    margin: 4px 6px 0 0;
+  }
+  .edu-detail a{
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--tape-cyan);
+  }
+  .edu-school a{
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--tape-cyan);
+  }
+
+  /* school logo stickers — hung ABOVE the card, overlapping only its top
+     border/edge (never the text: card padding-top is 20px and the school
+     name/date line lives below that, so keeping each sticker's bottom
+     edge at ~18px or higher guarantees zero overlap with any text) */
+  .sticker-usc{ top: -44px; right: -10px; width: 58px; height: 58px; transform: rotate(7deg); }
+  .sticker-uw{ top: -50px; right: 46px; width: 70px; height: 70px; transform: rotate(-8deg); }
+
+  /* second sticker per school — placed at a different corner/size/angle
+     than the first one on purpose, for that scattered scrapbook look */
+  .sticker-usc-2{ top: -30px; left: 8px; width: 46px; height: 46px; transform: rotate(-9deg); }
+  .sticker-uw-2{ top: -38px; left: -14px; width: 50px; height: 50px; transform: rotate(10deg); }
+
+  /* ---- work experience timeline ---- */
+  .timeline{
+    position: relative;
+    padding-left: 64px;
+  }
+  .timeline::before{
+    content: "";
+    position: absolute;
+    left: 23px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--line);
+  }
+
+  .job{
+    position: relative;
+    margin-bottom: 46px;
+  }
+  .job:last-child{ margin-bottom: 0; }
+
+  /* company logo stickers on the timeline — each one can be a different
+     size (that's intentional, real logos come in different shapes).
+     .job-logo sets the position on the timeline spine; width/height/
+     rotation are set per instance below since sizes vary on purpose. */
+  .job-logo{
+    top: -4px;
+  }
+  .job-logo.on-spine{ left: -64px; }
+  .job-title a{
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--tape-cyan);
+  }
+
+  .job-card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px 26px;
+  }
+  .job-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    margin-bottom: 4px;
+  }
+  .job-title{
+    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+  }
+  .job-dates{
+    font-size: 13px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .job-meta{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+
+  .job-label{
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin: 16px 0 8px;
+  }
+  .job-label:first-of-type{ margin-top: 0; }
+
+  .job-bullets{
+    margin: 0;
+    padding-left: 18px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .job-bullets li{ margin-bottom: 6px; }
+  .job-bullets li:last-child{ margin-bottom: 0; }
+
+  .job-learned{
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    font-style: italic;
+    background: #F6EFDD;
+    border-left: 3px solid var(--tape-yellow);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    margin: 0;
+  }
+
+  .editable-flag{
+    display: inline-block;
+    font-style: normal;
+    font-size: 10.5px;
+    color: #8a6d00;
+    background: #FFF3C4;
+    border: 1px dashed #D8B23A;
+    border-radius: 5px;
+    padding: 1px 7px;
+    margin-bottom: 6px;
+  }
+
+  @media (max-width: 560px){
+    .timeline{ padding-left: 52px; }
+    .job-logo.on-spine{ left: -52px; }
+    .timeline::before{ left: 19px; }
+    .edu-card .sticker{ position: static; margin-bottom: 10px; transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="top-nav">
+    <a class="back-link" href="homepage-v2.html">← Home</a>
+    <a class="download-btn" href="Alana_Pang_resume.pdf" download>⬇ Download Résumé</a>
+  </div>
+
+  <h1 class="page-title">Experience</h1>
+  <p class="page-subtitle">Education, work history, and what each role taught me.</p>
+
+  <!-- ============================================================
+       EDUCATION
+  ============================================================ -->
+  <section>
+    <h2 class="section-title">Education</h2>
+
+    <div class="edu-card">
+      <span class="sticker cutout sticker-usc"><img src="logo-usc-trojan.png" alt="USC logo"></span>
+      <span class="sticker sticker-usc-2"><img src="logo-usc-shield.jpeg" alt="USC shield logo" style="border-radius:3px;"></span>
+      <div class="edu-top">
+        <span class="edu-school"><a href="https://www.usc.edu/" target="_blank" rel="noopener">University of Southern California</a></span>
+        <span class="edu-dates">Sep 2026 — May 2028</span>
+      </div>
+      <div class="edu-detail">
+        Master's in Communication Management (MCM)
+        <div>
+          <span class="cert">Entertainment Marketing certificate (ongoing)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-card">
+      <span class="sticker cutout sticker-uw"><img src="logo-uw-bucky.png" alt="UW-Madison Bucky Badger logo"></span>
+      <span class="sticker sticker-uw-2"><img src="logo-uw-crest.jpeg" alt="UW-Madison crest logo" style="border-radius:3px;"></span>
+      <div class="edu-top">
+        <span class="edu-school"><a href="https://www.wisc.edu/" target="_blank" rel="noopener">University of Wisconsin–Madison</a></span>
+        <span class="edu-dates">Sep 2021 — May 2025</span>
+      </div>
+      <div class="edu-detail">
+        Bachelor of Arts, Strategic Communication
+        <div>
+          <span class="cert">Digital Cinema Production certificate</span>
+          <span class="cert">Theater and Drama certificate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       WORK EXPERIENCE
+  ============================================================ -->
+  <section>
+    <h2 class="section-title">Work Experience</h2>
+
+    <div class="timeline">
+
+      <div class="job">
+        <div class="job-logo sticker on-spine" style="width:56px;height:56px;transform:rotate(-3deg);"><img src="logo-helios-worldwide.png" alt="Helios Worldwide logo"></div>
+        <div class="job-card">
+          <div class="job-head">
+            <span class="job-title"><a href="https://www.heliosww.com/" target="_blank" rel="noopener">Helios Worldwide</a> — Media Intern</span>
+            <span class="job-dates">Jun 2025 — Present</span>
+          </div>
+          <div class="job-meta">Santa Monica, CA</div>
+
+          <div class="job-label">What I did</div>
+          <ul class="job-bullets">
+            <li>Managed e-commerce content for 50+ products for a beauty brand across TikTok Shop and Shopify, including product setup, storefront updates, and layouts.</li>
+            <li>Supported 5 clients across 10+ paid media, social media, and e-commerce campaigns, contributing to campaign execution, creative development, performance reporting, and client deliverables.</li>
+            <li>Produced 100+ static and video assets for Meta, TikTok, Instagram, Facebook, and e-commerce placements using traditional and AI-assisted creative workflows.</li>
+            <li>Analyzed Google Ads and Meta Ads data and developed internal pitches and client-facing decks with campaign and creative recommendations.</li>
+          </ul>
+
+          <div class="job-label">What I learned</div>
+          <span class="editable-flag">✏️ draft — edit freely</span>
+          <p class="job-learned">How to run multiple clients' campaigns in parallel without losing quality — juggling paid media data, creative production, and client deliverables taught me to move fast between the analytical and creative sides of marketing, not treat them as separate jobs.</p>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-logo sticker on-spine" style="width:48px;height:48px;transform:rotate(5deg);"><img src="logo-zhou-agency.jpeg" alt="Zhou Agency logo" style="border-radius:4px;"></div>
+        <div class="job-card">
+          <div class="job-head">
+            <span class="job-title"><a href="https://www.zhouagency.com/" target="_blank" rel="noopener">Zhou Agency</a> — Marketing Intern</span>
+            <span class="job-dates">Sep 2025 — Present</span>
+          </div>
+          <div class="job-meta">Remote</div>
+
+          <div class="job-label">What I did</div>
+          <ul class="job-bullets">
+            <li>Produced and managed 10+ podcast episodes and matching Google Ads campaigns, overseeing recording, editing, YouTube and Spotify publishing, description writing, and performance optimization.</li>
+            <li>Supported 2 webinars with 1,000+ registrants each and 8+ monthly live Q&A sessions, managing promotion, technical production, post-event advertising, surveys, and attendee-data analysis.</li>
+            <li>Executed 50+ Zoho email campaigns, published content across LinkedIn, Facebook, WeChat, and RED, and conducted monthly KPI and talk-ratio analysis using CRM and Excel data.</li>
+          </ul>
+
+          <div class="job-label">What I learned</div>
+          <span class="editable-flag">✏️ draft — edit freely</span>
+          <p class="job-learned">Owning content end-to-end across totally different formats — a podcast, a live webinar, an email campaign — means the audience and the platform change the rules every time. I learned to read each channel on its own terms instead of repurposing one playbook everywhere.</p>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-logo sticker on-spine" style="width:64px;height:64px;transform:rotate(-6deg);"><img src="logo-stars-collective.jpeg" alt="Stars Collective logo" style="border-radius:4px;"></div>
+        <div class="job-card">
+          <div class="job-head">
+            <span class="job-title"><a href="https://starscollective.com/" target="_blank" rel="noopener">Stars Collective Films Entertainment Group Inc.</a> — Development Intern</span>
+            <span class="job-dates">Mar 2026 — Jun 2026</span>
+          </div>
+          <div class="job-meta">Los Angeles, CA</div>
+
+          <div class="job-label">What I did</div>
+          <ul class="job-bullets">
+            <li>Managed social media and event-promotion content across Instagram, TikTok, and YouTube, contributing to 5% follower growth over three months.</li>
+            <li>Built and optimized a Discord community with automated bots and moderation workflows, supporting a network of 350+ creative talents.</li>
+            <li>Prepared coverage for 20+ scripts and researched 300+ entertainment IPs, translating market, adaptation, and box-office findings into 5+ business briefs.</li>
+          </ul>
+
+          <div class="job-label">What I learned</div>
+          <span class="editable-flag">✏️ draft — edit freely</span>
+          <p class="job-learned">This is where I got my first real look at how the entertainment industry actually decides what gets made — script coverage and IP research aren't creative writing, they're market analysis with a story attached. It confirmed that I want to work at the intersection of data and storytelling, not pick one.</p>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-logo sticker on-spine" style="width:52px;height:52px;transform:rotate(4deg);"><span class="sticker-label" style="font-size:13px;">4-H</span></div>
+        <div class="job-card">
+          <div class="job-head">
+            <span class="job-title"><a href="https://4h.extension.wisc.edu/" target="_blank" rel="noopener">UW–Madison Extension, Wisconsin 4-H PYD</a> — Communication Assistant</span>
+            <span class="job-dates">Oct 2023 — May 2025</span>
+          </div>
+          <div class="job-meta">Madison, WI</div>
+
+          <div class="job-label">What I did</div>
+          <ul class="job-bullets">
+            <li>Led social media promotion for 2 major annual events, created 50+ static and video assets, produced monthly newsletters, and analyzed performance data using Excel.</li>
+          </ul>
+
+          <div class="job-label">What I learned</div>
+          <span class="editable-flag">✏️ draft — edit freely</span>
+          <p class="job-learned">My first taste of owning a content calendar on a recurring cadence — monthly newsletters and event promotion taught me consistency matters as much as any single great post, and that data (even just Excel) should shape what I make next.</p>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-logo sticker on-spine" style="width:58px;height:58px;transform:rotate(3deg);"><span class="sticker-label" style="font-size:12px;">IPG</span></div>
+        <div class="job-card">
+          <div class="job-head">
+            <span class="job-title"><a href="https://www.ipgmediabrands.com/" target="_blank" rel="noopener">IPG Mediabrands</a> — Media Intern</span>
+            <span class="job-dates">Oct 2023 — May 2025</span>
+          </div>
+          <div class="job-meta">Madison, WI</div>
+
+          <div class="job-label">What I did</div>
+          <ul class="job-bullets">
+            <li>Analyzed LEGO campaign performance, streaming and box-office trends, and competitor activity across Mainland China to support media planning, optimization, and strategic recommendations.</li>
+          </ul>
+
+          <div class="job-label">What I learned</div>
+          <span class="editable-flag">✏️ draft — edit freely</span>
+          <p class="job-learned">Working on APAC market analysis for a global brand showed me how much local context changes a media strategy — the same LEGO campaign needed a completely different read on streaming and box-office trends in Mainland China than it would elsewhere. It's part of why the international/bilingual angle matters to me.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

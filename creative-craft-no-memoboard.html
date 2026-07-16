@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Craft — Alana Pang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F5F0E8;
+    --ink: #3B2A1E;
+    --ink-soft: #5c4a3a;
+    --card: #FFFDF8;
+    --line: #E4DAC4;
+    --tape-yellow: #F0C93A;
+    --tape-cyan: #7FE3E3;
+    --tape-pink: #F28FC0;
+    --tape-purple: #C9A8E8;
+    --shadow: rgba(59, 42, 30, 0.18);
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    font-family: 'futura-pt', 'Century Gothic', 'Trebuchet MS', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: var(--ink);
+    padding: 48px 24px 90px;
+  }
+
+  .page{ max-width: 980px; margin: 0 auto; }
+
+  .top-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .back-link{
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+  }
+  .back-link:hover{ border-bottom-color: var(--ink-soft); }
+
+  h1.page-title{
+    font-family: 'Chelsea Market', cursive;
+    font-size: 42px;
+    margin: 0 0 6px;
+  }
+  .page-subtitle{
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0 0 30px;
+  }
+
+  /* jump nav between the three sub-sections */
+  .jump-nav{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+  }
+  .jump-nav a{
+    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 8px 16px;
+    border-radius: 30px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .jump-nav a:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px -8px var(--shadow);
+  }
+  .jump-nav a:nth-child(1){ border-color: var(--tape-yellow); }
+  .jump-nav a:nth-child(2){ border-color: var(--tape-cyan); }
+  .jump-nav a:nth-child(3){ border-color: var(--tape-pink); }
+
+  section{ margin-bottom: 84px; scroll-margin-top: 30px; }
+  section:last-child{ margin-bottom: 0; }
+
+  h2.section-title{
+    font-family: 'Chelsea Market', cursive;
+    font-size: 26px;
+    margin: 0 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2.section-title::before{
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  #content h2.section-title::before{ background: var(--tape-yellow); }
+  #cinematography h2.section-title::before{ background: var(--tape-cyan); }
+  #costume h2.section-title::before{ background: var(--tape-pink); }
+
+  .section-desc{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+    max-width: 620px;
+    line-height: 1.6;
+  }
+
+  .placeholder-flag{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #8a6d00;
+    background: #FFF3C4;
+    border: 1px dashed #D8B23A;
+    border-radius: 6px;
+    padding: 4px 10px;
+    margin-bottom: 22px;
+  }
+
+  /* ---- content production + cinematography grids ---- */
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+  }
+  .grid.portraits{
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .tile{
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--line);
+    aspect-ratio: 4 / 5;
+  }
+  .grid.portraits .tile{ aspect-ratio: 3 / 4; }
+
+  .tile img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.9;
+  }
+  .tile .tag{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(255,255,255,0.92);
+    color: var(--ink);
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .tile .cap{
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    color: #fff;
+    background: linear-gradient(0deg, rgba(20,12,4,0.65), rgba(20,12,4,0));
+  }
+
+  /* ---- costume design cards (the real, complete section) ---- */
+  .costume-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .costume-card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 22px -14px var(--shadow);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .costume-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 16px 28px -14px var(--shadow);
+  }
+  .costume-thumb{
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: #EDEAE2;
+    overflow: hidden;
+  }
+  .costume-thumb img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .costume-body{ padding: 16px 18px 20px; }
+  .costume-title{
+    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0 0 4px;
+  }
+  .costume-role{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+  }
+  .costume-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1.5px solid var(--tape-pink);
+  }
+
+  /* ---- video cards (real content — Comm Arts cinema production work) ---- */
+  .channel-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 7px 14px;
+    border-radius: 30px;
+    margin-bottom: 30px;
+  }
+  .channel-link:hover{ border-color: var(--tape-yellow); }
+
+  h3.subgroup-title{
+    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+    padding-top: 6px;
+    border-top: 1px solid var(--line);
+  }
+  section#content > h3.subgroup-title:first-of-type{ border-top: none; padding-top: 0; }
+
+  .video-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 22px;
+    margin-bottom: 40px;
+  }
+  .video-grid:last-child{ margin-bottom: 0; }
+
+  .video-card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 18px -12px var(--shadow);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .video-card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 14px 24px -12px var(--shadow);
+  }
+  .video-thumb{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+    display: block;
+  }
+  .video-thumb img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.92;
+    transition: opacity .2s ease;
+  }
+  .video-thumb:hover img{ opacity: 1; }
+  .video-thumb::after{
+    content: "▶";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    margin: auto;
+    background: rgba(20,12,4,0.55);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .video-body{ padding: 14px 16px 16px; }
+  .video-title{
+    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    margin: 0 0 4px;
+  }
+  .video-role{
+    font-size: 12px;
+    color: var(--tape-pink);
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  .video-desc{
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+  }
+  .video-links{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .video-links a{
+    font-size: 12.5px;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1.5px solid var(--tape-cyan);
+  }
+
+  @media (max-width: 560px){
+    .grid{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .video-grid{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="top-nav">
+    <a class="back-link" href="homepage-v2.html">← Home</a>
+  </div>
+
+  <h1 class="page-title">Creative Craft</h1>
+  <p class="page-subtitle">Content production, cinematography, and theater costume design — the hands-on visual work behind the strategy.</p>
+
+  <nav class="jump-nav">
+    <a href="#content">Content Production</a>
+    <a href="#cinematography">Cinematography</a>
+    <a href="#costume">Theater Costume Design</a>
+  </nav>
+
+  <!-- ============================================================
+       CONTENT PRODUCTION
+  ============================================================ -->
+  <section id="content">
+    <h2 class="section-title">Content Production</h2>
+    <p class="section-desc">Film and video production from the Digital Cinema Production certificate, plus editing work — thumbnails link straight to YouTube.</p>
+    <a class="channel-link" href="https://www.youtube.com/@alana_o3o/videos" target="_blank" rel="noopener">▶ See everything on my YouTube channel</a>
+
+    <h3 class="subgroup-title">Comm Arts 467 — Cinematography and Sound Recording</h3>
+    <div class="video-grid">
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/yKl8TmmnQE4" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/yKl8TmmnQE4/hqdefault.jpg" alt="WEBS Scene 6 - The Dinner Table"></a>
+        <div class="video-body">
+          <p class="video-title">WEBS Scene 6 — The Dinner Table</p>
+          <p class="video-role">Director (directorial debut)</p>
+          <p class="video-desc">Selected for the 2025 Communication Arts Department Showcase.</p>
+          <div class="video-links"><a href="https://youtu.be/yKl8TmmnQE4" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/V2R0D6qGptA" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/V2R0D6qGptA/hqdefault.jpg" alt="Ice Shack Scene 22 - Night Shoot"></a>
+        <div class="video-body">
+          <p class="video-title">Ice Shack Scene 22 — Night Shoot</p>
+          <p class="video-role">Boom Operator &amp; Editor</p>
+          <p class="video-desc">Outdoor night shoot tackling exposure, white balance, traffic noise, and moonlight lighting design.</p>
+          <div class="video-links"><a href="https://youtu.be/V2R0D6qGptA" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/v-z5Ps8nPeo" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/v-z5Ps8nPeo/hqdefault.jpg" alt="WEBS Scene 2&4 - MOS"></a>
+        <div class="video-body">
+          <p class="video-title">WEBS Scene 2&amp;4 — MOS</p>
+          <p class="video-role">Assistant Camera &amp; Production Designer</p>
+          <p class="video-desc">Minimal-dialogue shoot focused on sound effects and camera language.</p>
+          <div class="video-links"><a href="https://youtu.be/v-z5Ps8nPeo" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/4o9rmhQ8ar0" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/4o9rmhQ8ar0/hqdefault.jpg" alt="Ice Shack Scene 8 - ONER"></a>
+        <div class="video-body">
+          <p class="video-title">Ice Shack Scene 8 — ONER</p>
+          <p class="video-role">Sound Mixer</p>
+          <p class="video-desc">The whole scene filmed in a single continuous take.</p>
+          <div class="video-links"><a href="https://youtu.be/4o9rmhQ8ar0" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/_ExkRHbHJ_Y" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/_ExkRHbHJ_Y/hqdefault.jpg" alt="WEBS Scene 24 - Staging"></a>
+        <div class="video-body">
+          <p class="video-title">WEBS Scene 24 — Staging</p>
+          <p class="video-role">Gaffer</p>
+          <p class="video-desc">First dialogued scene — learned to mimic TV lighting without a working TV on set.</p>
+          <div class="video-links"><a href="https://youtu.be/_ExkRHbHJ_Y" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/wuBaO-qjyrs" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/wuBaO-qjyrs/hqdefault.jpg" alt="WEBS Scene 8 - Studio"></a>
+        <div class="video-body">
+          <p class="video-title">WEBS Scene 8 — Studio</p>
+          <p class="video-role">Director of Photography</p>
+          <p class="video-desc">Built a vintage store look within the limited space of the Vilas studio.</p>
+          <div class="video-links"><a href="https://youtu.be/wuBaO-qjyrs" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="subgroup-title">Comm Arts 468 — Producing for Internet TV and Video</h3>
+    <div class="video-grid">
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/lbchsmOeI4g" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/lbchsmOeI4g/hqdefault.jpg" alt="Blueberry Goodbye"></a>
+        <div class="video-body">
+          <p class="video-title">Blueberry Goodbye</p>
+          <p class="video-role">Assistant Director &amp; Editing Leader</p>
+          <p class="video-desc">Narrative short film written, produced, and edited by 2AM Production.</p>
+          <div class="video-links"><a href="https://youtu.be/lbchsmOeI4g" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/_1i5CXMDVxw" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/_1i5CXMDVxw/hqdefault.jpg" alt="Invisible Man by Sheep"></a>
+        <div class="video-body">
+          <p class="video-title">Invisible Man by Sheep</p>
+          <p class="video-role">Camera Director &amp; Editing Leader</p>
+          <p class="video-desc">Live music video for Sheep, a Madison, WI band — produced by 2AM Production.</p>
+          <div class="video-links"><a href="https://youtu.be/_1i5CXMDVxw" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/cZRcg8Dqcf4" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/cZRcg8Dqcf4/hqdefault.jpg" alt="Mock Branded Content - Under Armour"></a>
+        <div class="video-body">
+          <p class="video-title">Mock Branded Content — Under Armour</p>
+          <p class="video-role">Marketing Director, Camera &amp; Editing Assistant</p>
+          <p class="video-desc">A mock branded content piece produced and edited by 2AM Production.</p>
+          <div class="video-links"><a href="https://youtu.be/cZRcg8Dqcf4" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="subgroup-title">Editing Work Pieces <span style="text-transform:none;font-weight:400;">— edited by Alana in Adobe Premiere Pro; footage from capstone classmates</span></h3>
+    <div class="video-grid">
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/DBVev5W5x9Q" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/DBVev5W5x9Q/hqdefault.jpg" alt="Hold On To Me Scene 6 and 15-18"></a>
+        <div class="video-body">
+          <p class="video-title">Hold On To Me — Scene 6 &amp; 15–18</p>
+          <p class="video-role">Editor</p>
+          <p class="video-desc">Re-editing work for Comm Arts 465: Introduction to Editing.</p>
+          <div class="video-links">
+            <a href="https://youtu.be/DBVev5W5x9Q" target="_blank" rel="noopener">Scene 6 ↗</a>
+            <a href="https://youtu.be/xYuB3eMkeDA" target="_blank" rel="noopener">Scene 15–18 ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/vee6Rb95rpQ" target="_blank" rel="noopener"><img src="https://img.youtube.com/vi/vee6Rb95rpQ/hqdefault.jpg" alt="Jalen's Turtle Scene 10"></a>
+        <div class="video-body">
+          <p class="video-title">Jalen's Turtle — Scene 10</p>
+          <p class="video-role">Editor</p>
+          <p class="video-desc">Re-editing work for Comm Arts 465: Introduction to Editing.</p>
+          <div class="video-links"><a href="https://youtu.be/vee6Rb95rpQ" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CINEMATOGRAPHY
+  ============================================================ -->
+  <section id="cinematography">
+    <h2 class="section-title">Cinematography</h2>
+    <p class="section-desc">Portrait cinematography — inspired by my Communication Art and Journalism background, mostly shot with friends as my "models."</p>
+    <span class="placeholder-flag">🖼 placeholder tiles — swap in your real portrait work whenever it's ready</span>
+
+    <div class="grid portraits">
+      <div class="tile"><img src="https://picsum.photos/seed/portrait1/400/540" alt="placeholder — replace with a real portrait"></div>
+      <div class="tile"><img src="https://picsum.photos/seed/portrait2/400/540" alt="placeholder — replace with a real portrait"></div>
+      <div class="tile"><img src="https://picsum.photos/seed/portrait3/400/540" alt="placeholder — replace with a real portrait"></div>
+      <div class="tile"><img src="https://picsum.photos/seed/portrait4/400/540" alt="placeholder — replace with a real portrait"></div>
+      <div class="tile"><img src="https://picsum.photos/seed/portrait5/400/540" alt="placeholder — replace with a real portrait"></div>
+      <div class="tile"><img src="https://picsum.photos/seed/portrait6/400/540" alt="placeholder — replace with a real portrait"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       THEATER COSTUME DESIGN — real, complete content
+  ============================================================ -->
+  <section id="costume">
+    <h2 class="section-title">Theater Costume Design</h2>
+    <p class="section-desc">Costume design work for three university theater productions — rooted in Theater and Drama, a meaningful thread through college outside of communications.</p>
+
+    <div class="costume-grid">
+      <div class="costume-card">
+        <div class="costume-thumb"><img src="https://picsum.photos/seed/flyinwest/500/320" alt="Flyin West costume design — replace with a real production photo"></div>
+        <div class="costume-body">
+          <p class="costume-title">Flyin West</p>
+          <p class="costume-role">Costume Design</p>
+          <a class="costume-link" href="https://www.canva.com/design/DAGWealgDbU/NnxFaB3o1eoTsIj6HAZorQ/view?utm_content=DAGWealgDbU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h344d1dc994" target="_blank" rel="noopener">View design board →</a>
+        </div>
+      </div>
+
+      <div class="costume-card">
+        <div class="costume-thumb"><img src="https://picsum.photos/seed/shekills/500/320" alt="She Kills Monster costume design — replace with a real production photo"></div>
+        <div class="costume-body">
+          <p class="costume-title">She Kills Monster</p>
+          <p class="costume-role">Costume Design</p>
+          <a class="costume-link" href="https://www.canva.com/design/DAGYQa3X3AU/lIEj7OcXukExlCtPpelTnA/view?utm_content=DAGYQa3X3AU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h766415e3c0" target="_blank" rel="noopener">View design board →</a>
+        </div>
+      </div>
+
+      <div class="costume-card">
+        <div class="costume-thumb"><img src="https://picsum.photos/seed/theheroes/500/320" alt="The Heroes costume design — replace with a real production photo"></div>
+        <div class="costume-body">
+          <p class="costume-title">The Heroes</p>
+          <p class="costume-role">Costume Design</p>
+          <a class="costume-link" href="https://www.canva.com/design/DAGU5TdrpAw/aMxAlyU9raJt41inIn_ysg/view?utm_content=DAGU5TdrpAw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc6242902f0" target="_blank" rel="noopener">View design board →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

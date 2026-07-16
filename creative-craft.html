@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Craft — Alana Pang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F5F0E8;
+    --ink: #3B2A1E;
+    --ink-soft: #5c4a3a;
+    --card: #FFFDF8;
+    --line: #E4DAC4;
+    --tape-yellow: #F0C93A;
+    --tape-cyan: #7FE3E3;
+    --tape-pink: #F28FC0;
+    --tape-purple: #C9A8E8;
+    --shadow: rgba(59, 42, 30, 0.18);
+    --pin-red: #C1443C;
+    --board-text: #F6EFDD; /* cream — for any text sitting directly on the
+      cork board, since dark ink-on-ink loses contrast there. Text inside
+      white/paper cards stays dark ink (that contrast is fine). */
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{ height: 100%; }
+
+  body{
+    margin: 0;
+    min-height: 100vh;
+    background-color: #F6F3EC;
+    font-family: 'futura-pt', 'Century Gothic', 'Trebuchet MS', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: var(--ink);
+    padding: 22px;
+  }
+
+  /* same framed cork board as Home — .page lives inside it so the whole
+     site feels continuous as you move between pages */
+  .board-frame{
+    width: 100%;
+    min-height: calc(100vh - 44px);
+    border: 13px solid transparent;
+    border-image: linear-gradient(135deg, #EFCE9E 0%, #D9A873 45%, #BE8752 100%) 1;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.3),
+      inset 0 2px 14px rgba(20,10,2,0.3),
+      0 24px 50px -12px rgba(0,0,0,0.35);
+    background-color: #C4915A;
+    background-image:
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 50%, rgba(35,18,6,0.28) 100%),
+      radial-gradient(ellipse 45% 35% at 18% 22%, rgba(130,80,34,0.22), transparent 70%),
+      radial-gradient(ellipse 40% 30% at 78% 68%, rgba(120,72,30,0.2), transparent 70%),
+      radial-gradient(ellipse 35% 45% at 62% 12%, rgba(232,186,128,0.18), transparent 70%),
+      radial-gradient(ellipse 50% 30% at 30% 85%, rgba(120,72,30,0.16), transparent 70%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0.36 0 0 0 0 0.22 0 0 0 0 0.09 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      repeating-linear-gradient(0deg, rgba(60,36,14,0.05) 0 1px, transparent 1px 5px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 48px 24px 70px;
+    position: relative;
+  }
+
+  .page{ max-width: 980px; width: 100%; }
+
+  .top-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .back-link{
+    font-size: 14px;
+    color: var(--board-text);
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    opacity: 0.85;
+  }
+  .back-link:hover{ border-bottom-color: var(--board-text); opacity: 1; }
+
+  h1.page-title{
+    font-family: 'Chelsea Market', cursive;
+    font-size: 42px;
+    margin: 0 0 6px;
+    color: var(--board-text);
+  }
+  .page-subtitle{
+    font-size: 15px;
+    color: var(--board-text);
+    opacity: 0.85;
+    margin: 0 0 30px;
+  }
+
+  /* jump nav between the three sub-sections — styled as washi tape
+     labels, same language as the polaroid tapes on Home */
+  .jump-nav{
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-bottom: 54px;
+    padding-top: 6px;
+  }
+  .jump-nav a{
+    font-family: 'Chelsea Market', cursive;
+    font-weight: 400;
+    font-size: 13px;
+    text-decoration: none;
+    color: #2c2c26;
+    padding: 9px 20px;
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(20,12,4,0.28);
+    opacity: 0.96;
+    transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+    display: inline-block;
+  }
+  .jump-nav a:hover{ opacity: 1; box-shadow: 0 6px 12px rgba(20,12,4,0.32); }
+  .jump-nav a:nth-child(1){ background: var(--tape-yellow); transform: rotate(-3deg); }
+  .jump-nav a:nth-child(2){ background: var(--tape-cyan); transform: rotate(2deg); }
+  .jump-nav a:nth-child(3){ background: var(--tape-pink); transform: rotate(-2deg); }
+  .jump-nav a:nth-child(1):hover{ transform: rotate(-3deg) translateY(-2px); }
+  .jump-nav a:nth-child(2):hover{ transform: rotate(2deg) translateY(-2px); }
+  .jump-nav a:nth-child(3):hover{ transform: rotate(-2deg) translateY(-2px); }
+
+  section{ margin-bottom: 84px; scroll-margin-top: 30px; }
+  section:last-child{ margin-bottom: 0; }
+
+  h2.section-title{
+    font-family: 'Chelsea Market', cursive;
+    font-size: 26px;
+    margin: 0 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--board-text);
+  }
+  h2.section-title::before{
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  #content h2.section-title::before{ background: var(--tape-yellow); }
+  #cinematography h2.section-title::before{ background: var(--tape-cyan); }
+  #costume h2.section-title::before{ background: var(--tape-pink); }
+
+  .section-desc{
+    font-size: 14.5px;
+    color: var(--board-text);
+    opacity: 0.85;
+    margin: 0 0 24px;
+    max-width: 620px;
+    line-height: 1.6;
+  }
+
+  .placeholder-flag{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #8a6d00;
+    background: #FFF3C4;
+    border: 1px dashed #D8B23A;
+    border-radius: 6px;
+    padding: 4px 10px;
+    margin-bottom: 22px;
+  }
+
+  /* ---- content production + cinematography grids ---- */
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+  }
+  .grid.portraits{
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .tile{
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--line);
+    aspect-ratio: 4 / 5;
+  }
+  .grid.portraits .tile{ aspect-ratio: 3 / 4; }
+
+  .tile img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.9;
+  }
+  .tile .tag{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(255,255,255,0.92);
+    color: var(--ink);
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .tile .cap{
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    color: #fff;
+    background: linear-gradient(0deg, rgba(20,12,4,0.65), rgba(20,12,4,0));
+  }
+
+  /* ---- costume design cards (the real, complete section) ---- */
+  .costume-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .costume-card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 22px -14px var(--shadow);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .costume-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 16px 28px -14px var(--shadow);
+  }
+  .costume-thumb{
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: #EDEAE2;
+    overflow: hidden;
+  }
+  .costume-thumb img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .costume-body{ padding: 16px 18px 20px; }
+  .costume-title{
+    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0 0 4px;
+  }
+  .costume-role{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+  }
+  .costume-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1.5px solid var(--tape-pink);
+  }
+
+  /* ---- video cards (real content — Comm Arts cinema production work) ---- */
+
+  /* "pinned to the board" tag — same kraft-tag component as the About Me
+     name tag on Home, but pushpinned straight onto the cork board rather
+     than onto a photo. Sits directly on the board (not inside a card). */
+  .pinned-tag-wrap{
+    position: relative;
+    display: inline-block;
+    margin: 4px 0 34px;
+  }
+  .pinned-tag{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #F2E6C6;
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 9px 20px 9px 16px;
+    font-family: 'Chelsea Market', cursive;
+    font-size: 16px;
+    color: var(--ink);
+    text-decoration: none;
+    transform: rotate(-3deg);
+    box-shadow: 0 8px 16px rgba(20,12,4,0.35);
+    border-radius: 2px;
+    transition: transform .15s ease;
+  }
+  .pinned-tag:hover{ transform: rotate(-3deg) translateY(-2px); }
+  .pushpin{
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    z-index: 3;
+    background: radial-gradient(circle at 32% 28%, #ff9088, var(--pin-red) 55%, #7a2620 100%);
+    box-shadow:
+      0 5px 6px rgba(0,0,0,0.4),
+      inset 0 -3px 4px rgba(0,0,0,0.3),
+      inset 0 2px 3px rgba(255,255,255,0.45);
+    pointer-events: none;
+  }
+
+  h3.subgroup-title{
+    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--board-text);
+    opacity: 0.9;
+    margin: 0 0 16px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(246,239,221,0.25);
+  }
+  section#content > h3.subgroup-title:first-of-type{ border-top: none; padding-top: 0; }
+
+  /* flex + per-card rotation instead of a rigid grid, so the projects
+     scatter a bit like the homepage collage rather than lining up in
+     neat rows */
+  .video-grid{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 34px 24px;
+    margin-bottom: 46px;
+  }
+  .video-grid:last-child{ margin-bottom: 0; }
+
+  .video-card{
+    width: 270px;
+    flex: 0 0 auto;
+    /* lined memo-paper — same two-layer idea as the About Me card: paper
+       underneath, film negative laid on top of it */
+    background:
+      repeating-linear-gradient(180deg, transparent 0 25px, rgba(59,42,30,0.06) 25px 26px),
+      var(--card);
+    border-radius: 3px;
+    padding: 18px 16px 16px;
+    box-shadow: 0 14px 26px -12px rgba(10,6,2,0.5);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .video-card:nth-child(5n+1){ transform: rotate(-2deg); margin-top: 4px; }
+  .video-card:nth-child(5n+2){ transform: rotate(1.5deg); margin-top: 22px; }
+  .video-card:nth-child(5n+3){ transform: rotate(-1deg); margin-top: 0; }
+  .video-card:nth-child(5n+4){ transform: rotate(2deg); margin-top: 14px; }
+  .video-card:nth-child(5n+5){ transform: rotate(-1.5deg); margin-top: 8px; }
+  .video-card:nth-child(5n+1):hover{ transform: rotate(-2deg) translateY(-4px); }
+  .video-card:nth-child(5n+2):hover{ transform: rotate(1.5deg) translateY(-4px); }
+  .video-card:nth-child(5n+3):hover{ transform: rotate(-1deg) translateY(-4px); }
+  .video-card:nth-child(5n+4):hover{ transform: rotate(2deg) translateY(-4px); }
+  .video-card:nth-child(5n+5):hover{ transform: rotate(-1.5deg) translateY(-4px); }
+  .video-card:hover{ box-shadow: 0 20px 34px -12px rgba(10,6,2,0.55); }
+
+  /* film-negative frame around the thumbnail — dark base, sprocket-hole
+     strips top and bottom, and a subtle sepia/scratch treatment on the
+     image itself. Sits with its own slight independent tilt so it reads
+     as a strip laid ON TOP of the paper, not part of the same surface.
+     If you upload real film-texture photos, this ::before/::after pair
+     is the piece to swap for a background-image of your scanned strip —
+     everything else (sizing, thumb, sprockets) can stay. */
+  .video-thumb{
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(160deg, #241811, #100b07);
+    overflow: hidden;
+    padding: 15px 6px;
+    margin-bottom: 14px;
+    transform: rotate(-2deg);
+    box-shadow: 0 12px 22px -8px rgba(0,0,0,0.55);
+  }
+  .video-thumb::before,
+  .video-thumb::after{
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 13px;
+    z-index: 2;
+    background-color: #1a120c;
+    background-image: repeating-linear-gradient(90deg, #d8c49a 0 7px, transparent 7px 20px);
+    background-position: 6px center;
+  }
+  .video-thumb::before{ top: 0; }
+  .video-thumb::after{ bottom: 0; }
+
+  .video-thumb-inner{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 1px;
+  }
+  .video-thumb-inner img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: sepia(0.18) contrast(1.06) saturate(0.92) brightness(0.96);
+    opacity: 0.94;
+    transition: opacity .2s ease, filter .2s ease;
+  }
+  .video-thumb:hover .video-thumb-inner img{ opacity: 1; filter: sepia(0.06) contrast(1.04); }
+  .video-thumb-inner::after{
+    content: "▶";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    margin: auto;
+    background: rgba(20,12,4,0.55);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .video-body{ padding: 0; }
+  .video-title{
+    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    margin: 0 0 4px;
+  }
+  .video-role{
+    font-size: 12px;
+    color: var(--tape-pink);
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  .video-desc{
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+  }
+  .video-links{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .video-links a{
+    font-size: 12.5px;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1.5px solid var(--tape-cyan);
+  }
+
+  @media (max-width: 560px){
+    .grid{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .video-card{ width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="board-frame">
+<div class="page">
+
+  <div class="top-nav">
+    <a class="back-link" href="homepage-v2.html">← Home</a>
+  </div>
+
+  <h1 class="page-title">Creative Craft</h1>
+  <p class="page-subtitle">Content production, cinematography, and theater costume design — the hands-on visual work behind the strategy.</p>
+
+  <nav class="jump-nav">
+    <a href="#content">Content Production</a>
+    <a href="#cinematography">Cinematography</a>
+    <a href="#costume">Theater Costume Design</a>
+  </nav>
+
+  <!-- ============================================================
+       CONTENT PRODUCTION
+  ============================================================ -->
+  <section id="content">
+    <h2 class="section-title">Content Production</h2>
+    <p class="section-desc">Film and video production from the Digital Cinema Production certificate, plus editing work — thumbnails link straight to YouTube.</p>
+    <div class="pinned-tag-wrap">
+      <span class="pushpin"></span>
+      <a class="pinned-tag" href="https://www.youtube.com/@alana_o3o/videos" target="_blank" rel="noopener">▶ watch it all on YouTube</a>
+    </div>
+
+    <h3 class="subgroup-title">Comm Arts 467 — Cinematography and Sound Recording</h3>
+    <div class="video-grid">
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/yKl8TmmnQE4" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/yKl8TmmnQE4/hqdefault.jpg" alt="WEBS Scene 6 - The Dinner Table"></span></a>
+        <div class="video-body">
+          <p class="video-title">WEBS Scene 6 — The Dinner Table</p>
+          <p class="video-role">Director (directorial debut)</p>
+          <p class="video-desc">Selected for the 2025 Communication Arts Department Showcase.</p>
+          <div class="video-links"><a href="https://youtu.be/yKl8TmmnQE4" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/V2R0D6qGptA" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/V2R0D6qGptA/hqdefault.jpg" alt="Ice Shack Scene 22 - Night Shoot"></span></a>
+        <div class="video-body">
+          <p class="video-title">Ice Shack Scene 22 — Night Shoot</p>
+          <p class="video-role">Boom Operator &amp; Editor</p>
+          <p class="video-desc">Outdoor night shoot tackling exposure, white balance, traffic noise, and moonlight lighting design.</p>
+          <div class="video-links"><a href="https://youtu.be/V2R0D6qGptA" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/v-z5Ps8nPeo" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/v-z5Ps8nPeo/hqdefault.jpg" alt="WEBS Scene 2&4 - MOS"></span></a>
+        <div class="video-body">
+          <p class="video-title">WEBS Scene 2&amp;4 — MOS</p>
+          <p class="video-role">Assistant Camera &amp; Production Designer</p>
+          <p class="video-desc">Minimal-dialogue shoot focused on sound effects and camera language.</p>
+          <div class="video-links"><a href="https://youtu.be/v-z5Ps8nPeo" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/4o9rmhQ8ar0" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/4o9rmhQ8ar0/hqdefault.jpg" alt="Ice Shack Scene 8 - ONER"></span></a>
+        <div class="video-body">
+          <p class="video-title">Ice Shack Scene 8 — ONER</p>
+          <p class="video-role">Sound Mixer</p>
+          <p class="video-desc">The whole scene filmed in a single continuous take.</p>
+          <div class="video-links"><a href="https://youtu.be/4o9rmhQ8ar0" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/_ExkRHbHJ_Y" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/_ExkRHbHJ_Y/hqdefault.jpg" alt="WEBS Scene 24 - Staging"></span></a>
+        <div class="video-body">
+          <p class="video-title">WEBS Scene 24 — Staging</p>
+          <p class="video-role">Gaffer</p>
+          <p class="video-desc">First dialogued scene — learned to mimic TV lighting without a working TV on set.</p>
+          <div class="video-links"><a href="https://youtu.be/_ExkRHbHJ_Y" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/wuBaO-qjyrs" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/wuBaO-qjyrs/hqdefault.jpg" alt="WEBS Scene 8 - Studio"></span></a>
+        <div class="video-body">
+          <p class="video-title">WEBS Scene 8 — Studio</p>
+          <p class="video-role">Director of Photography</p>
+          <p class="video-desc">Built a vintage store look within the limited space of the Vilas studio.</p>
+          <div class="video-links"><a href="https://youtu.be/wuBaO-qjyrs" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="subgroup-title">Comm Arts 468 — Producing for Internet TV and Video</h3>
+    <div class="video-grid">
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/lbchsmOeI4g" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/lbchsmOeI4g/hqdefault.jpg" alt="Blueberry Goodbye"></span></a>
+        <div class="video-body">
+          <p class="video-title">Blueberry Goodbye</p>
+          <p class="video-role">Assistant Director &amp; Editing Leader</p>
+          <p class="video-desc">Narrative short film written, produced, and edited by 2AM Production.</p>
+          <div class="video-links"><a href="https://youtu.be/lbchsmOeI4g" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/_1i5CXMDVxw" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/_1i5CXMDVxw/hqdefault.jpg" alt="Invisible Man by Sheep"></span></a>
+        <div class="video-body">
+          <p class="video-title">Invisible Man by Sheep</p>
+          <p class="video-role">Camera Director &amp; Editing Leader</p>
+          <p class="video-desc">Live music video for Sheep, a Madison, WI band — produced by 2AM Production.</p>
+          <div class="video-links"><a href="https://youtu.be/_1i5CXMDVxw" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/cZRcg8Dqcf4" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/cZRcg8Dqcf4/hqdefault.jpg" alt="Mock Branded Content - Under Armour"></span></a>
+        <div class="video-body">
+          <p class="video-title">Mock Branded Content — Under Armour</p>
+          <p class="video-role">Marketing Director, Camera &amp; Editing Assistant</p>
+          <p class="video-desc">A mock branded content piece produced and edited by 2AM Production.</p>
+          <div class="video-links"><a href="https://youtu.be/cZRcg8Dqcf4" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="subgroup-title">Editing Work Pieces <span style="text-transform:none;font-weight:400;">— edited by Alana in Adobe Premiere Pro; footage from capstone classmates</span></h3>
+    <div class="video-grid">
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/DBVev5W5x9Q" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/DBVev5W5x9Q/hqdefault.jpg" alt="Hold On To Me Scene 6 and 15-18"></span></a>
+        <div class="video-body">
+          <p class="video-title">Hold On To Me — Scene 6 &amp; 15–18</p>
+          <p class="video-role">Editor</p>
+          <p class="video-desc">Re-editing work for Comm Arts 465: Introduction to Editing.</p>
+          <div class="video-links">
+            <a href="https://youtu.be/DBVev5W5x9Q" target="_blank" rel="noopener">Scene 6 ↗</a>
+            <a href="https://youtu.be/xYuB3eMkeDA" target="_blank" rel="noopener">Scene 15–18 ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <a class="video-thumb" href="https://youtu.be/vee6Rb95rpQ" target="_blank" rel="noopener"><span class="video-thumb-inner"><img src="https://img.youtube.com/vi/vee6Rb95rpQ/hqdefault.jpg" alt="Jalen's Turtle Scene 10"></span></a>
+        <div class="video-body">
+          <p class="video-title">Jalen's Turtle — Scene 10</p>
+          <p class="video-role">Editor</p>
+          <p class="video-desc">Re-editing work for Comm Arts 465: Introduction to Editing.</p>
+          <div class="video-links"><a href="https://youtu.be/vee6Rb95rpQ" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CINEMATOGRAPHY
+  ============================================================ -->
+  <section id="cinematography">
+    <h2 class="section-title">Cinematography</h2>
+    <p class="section-desc">Portrait cinematography — inspired by my Communication Art and Journalism background, mostly shot with friends as my "models."</p>
+    <span class="placeholder-flag">🖼 placeholder tiles — swap in your real portrait work whenever it's ready</span>
+
+    <div class="grid portraits">
+      <div class="tile"><img src="https://picsum.photos/seed/portrait1/400/540" alt="placeholder — replace with a real portrait"></div>
+      <div class="tile"><img src="https://picsum.photos/seed/portrait2/400/540" alt="placeholder — replace with a real portrait"></div>
+      <div class="tile"><img src="https://picsum.photos/seed/portrait3/400/540" alt="placeholder — replace with a real portrait"></div>
+      <div class="tile"><img src="https://picsum.photos/seed/portrait4/400/540" alt="placeholder — replace with a real portrait"></div>
+      <div class="tile"><img src="https://picsum.photos/seed/portrait5/400/540" alt="placeholder — replace with a real portrait"></div>
+      <div class="tile"><img src="https://picsum.photos/seed/portrait6/400/540" alt="placeholder — replace with a real portrait"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       THEATER COSTUME DESIGN — real, complete content
+  ============================================================ -->
+  <section id="costume">
+    <h2 class="section-title">Theater Costume Design</h2>
+    <p class="section-desc">Costume design work for three university theater productions — rooted in Theater and Drama, a meaningful thread through college outside of communications.</p>
+
+    <div class="costume-grid">
+      <div class="costume-card">
+        <div class="costume-thumb"><img src="https://picsum.photos/seed/flyinwest/500/320" alt="Flyin West costume design — replace with a real production photo"></div>
+        <div class="costume-body">
+          <p class="costume-title">Flyin West</p>
+          <p class="costume-role">Costume Design</p>
+          <a class="costume-link" href="https://www.canva.com/design/DAGWealgDbU/NnxFaB3o1eoTsIj6HAZorQ/view?utm_content=DAGWealgDbU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h344d1dc994" target="_blank" rel="noopener">View design board →</a>
+        </div>
+      </div>
+
+      <div class="costume-card">
+        <div class="costume-thumb"><img src="https://picsum.photos/seed/shekills/500/320" alt="She Kills Monster costume design — replace with a real production photo"></div>
+        <div class="costume-body">
+          <p class="costume-title">She Kills Monster</p>
+          <p class="costume-role">Costume Design</p>
+          <a class="costume-link" href="https://www.canva.com/design/DAGYQa3X3AU/lIEj7OcXukExlCtPpelTnA/view?utm_content=DAGYQa3X3AU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h766415e3c0" target="_blank" rel="noopener">View design board →</a>
+        </div>
+      </div>
+
+      <div class="costume-card">
+        <div class="costume-thumb"><img src="https://picsum.photos/seed/theheroes/500/320" alt="The Heroes costume design — replace with a real production photo"></div>
+        <div class="costume-body">
+          <p class="costume-title">The Heroes</p>
+          <p class="costume-role">Costume Design</p>
+          <a class="costume-link" href="https://www.canva.com/design/DAGU5TdrpAw/aMxAlyU9raJt41inIn_ysg/view?utm_content=DAGU5TdrpAw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc6242902f0" target="_blank" rel="noopener">View design board →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+</body>
+</html>
