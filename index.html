@@ -1,22 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Homepage v2 — Polaroid Entrance</title>
+<title>Homepage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Jost:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   /*
     FONT NOTE:
     - Title font: Chelsea Market (loaded from Google Fonts below) ✔
-    - Body font: futura-pt, weight 300 (light), normal style — this is
-      Adobe Fonts' (Typekit) hosted "Futura PT". It will only actually
-      render if an Adobe Fonts kit embed is added to <head> (a script or
-      link tag with your kit ID from fonts.adobe.com). Without that kit
-      code, 'futura-pt' silently falls through to the sans-serif fallback
-      below. Send over your Adobe Fonts kit ID/embed snippet and I'll wire
-      it in.
+    - Body font: futura-pt if installed locally; otherwise Jost (free
+      Futura-style font loaded from Google Fonts below) so every visitor
+      sees the same look.
   */
   :root{
     --bg: #F5F0E8;
@@ -39,7 +35,7 @@
     margin: 0;
     min-height: 100vh;
     background-color: #F6F3EC; /* white-ish wall/matting color outside the frame */
-    font-family: 'futura-pt', 'Century Gothic', 'Trebuchet MS', sans-serif;
+    font-family: 'futura-pt', 'Jost', 'Century Gothic', 'Trebuchet MS', sans-serif;
     font-weight: 300;
     font-style: normal;
     color: var(--ink);
@@ -100,7 +96,7 @@
     transform: translateY(-28px);
   }
   .intro .eyebrow{
-    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-family: 'futura-pt', 'Jost', 'Century Gothic', sans-serif;
     font-weight: 300;
     font-style: normal;
     font-size: 15px;
@@ -235,7 +231,7 @@
   }
 
   .caption{
-    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-family: 'futura-pt', 'Jost', 'Century Gothic', sans-serif;
     font-weight: 300;
     font-style: normal;
     font-size: 14px;
@@ -254,7 +250,7 @@
   .status{
     text-align: center;
     margin-top: 40px;
-    font-family: 'futura-pt', 'Century Gothic', sans-serif;
+    font-family: 'futura-pt', 'Jost', 'Century Gothic', sans-serif;
     font-weight: 300;
     font-style: normal;
     font-size: 15px;
@@ -344,7 +340,7 @@
     margin: 0 0 14px;
   }
   .bio-text p{
-    font-family: 'futura-pt', 'Century Gothic', 'Trebuchet MS', sans-serif;
+    font-family: 'futura-pt', 'Jost', 'Century Gothic', 'Trebuchet MS', sans-serif;
     font-weight: 300;
     font-style: normal;
     font-size: 15px;
